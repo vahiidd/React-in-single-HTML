@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+    <style>
+      .container {
+        width: 100%;
+        align-items: center;
+      }
+
+      .card {
+        width: 60%;
+        height: 200px;
+        margin: auto;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px 3px #aaa;
+        overflow: hidden;
+      }
+
+      .card .top {
+        height: 100px;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .card .top .delete {
+        background-color: red;
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+      }
+
+      .card .top .points {
+        width: 22%;
+      }
+
+      .card .top .pro {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding-top: 8px;
+        width: 30%;
+      }
+
+      .card .top .pro .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card .top .pro .image {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .card .top .pro .name {
+        display: inline-block;
+        font-weight: bold;
+      }
+
+      .card .bottom {
+        height: 100px;
+        width: 100%;
+        position: relative;
+      }
+
+      .card .bottom .text {
+        padding: 7px;
+      }
+
+      .card .bottom .date {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      .like {
+        cursor: pointer;
+        margin-left: 5px;
+      }
+
+      .dislike {
+        cursor: pointer;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function App() {
+        const records = [
+          {
+            id: '1',
+            text:
+              'Great welcoming experience to the Dominican. We used Otium for the airport transport- we were to the resort in 20 minutes. Ralphy has been our concierge for the first half of the stay, he been very helpful- always able to pull through for anything we request',
+            username: 'Jake W',
+            imageurl:
+              'https://media-cdn.tripadvisor.com/media/photo-l/01/2e/70/9e/avatar069.jpg',
+            date: 'January 2020',
+            point: 11
+          },
+          {
+            id: '2',
+            text:
+              'We travelled as a group of 13 ages 18 to 80 and this resort was enjoyed by all. Weve been fortunate to travel to many resorts in Punta Cana but the Grand was by far the best',
+            username: 'Andrea C',
+            imageurl:
+              'https://media-cdn.tripadvisor.com/media/photo-l/01/2e/70/55/avatar028.jpg',
+            date: 'Jan 2020',
+            point: 14
+          },
+          {
+            id: '3',
+            text:
+              'The Hotel opened 1-1,5 hs ago. Everything is new and very clean. Even the cheapest rooms are very spacious (77square meters and room and dinning area with sofa bed are diivided by a sliding door).',
+            username: 'sergiogiaco',
+            imageurl:
+              'https://media-cdn.tripadvisor.com/media/photo-l/01/2e/70/74/avatar056.jpg',
+            date: 'Dec 2020',
+            point: 11
+          }
+        ];
+        return <Container records={records} />;
+      }
+
+      function Container({ records }) {
+        const cards = records.map((record) => (
+          <Card
+            key={record.id}
+            text={record.text}
+            username={record.username}
+            imageurl={record.imageurl}
+            date={record.date}
+            point={record.point}
+          />
+        ));
+        return <div className='container'>{cards}</div>;
+      }
+
+      function Card({ key, text, username, imageurl, date, point }) {
+        return (
+          <div className='card'>
+            <div className='top'>
+              <Pro imageurl={imageurl} username={username} />
+              <CountLike point={point} />
+              <Point point={point} />
+            </div>
+            <div className='bottom'>
+              <CountLike text={text} date={date} />
+            </div>
+          </div>
+        );
+      }
+
+      function Pro({ imageurl, username }) {
+        return (
+          <div className='pro'>
+            <div className='image'>
+              <img src={imageurl} />
+            </div>
+            <p className='name'>{username}</p>
+          </div>
+        );
+      }
+
+      function Point({ point }) {
+        return (
+          <div className='points'>
+            <p>
+              Total Points: <span className='count'>{point}</span>
+              <span className='like'>👍</span>
+              <span className='dislike'>👎</span>
+            </p>
+          </div>
+        );
+      }
+
+      function CountLike({ text, date }) {
+        return (
+          <div>
+            <p className='text'>{text}</p>
+            <p className='date'>{date}</p>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
